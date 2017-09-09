@@ -9,12 +9,19 @@
     tools:context="dodge.hero.z.gank.MainActivity">
 
     <Button
-        android:id="@+id/btn_camara"
+        android:id="@+id/btn_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/btn_girl_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GANK IMG"/>
+
 
     <TextView
+        android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

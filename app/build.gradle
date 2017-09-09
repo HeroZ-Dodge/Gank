@@ -51,8 +51,8 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     // retrofit                 https://github.com/square/retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:retrofit-adapters:2.3.0'
-    compile 'com.squareup.retrofit2:retrofit-converters:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     // dagger                   https://github.com/google/dagger
     compile 'com.google.dagger:dagger:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'

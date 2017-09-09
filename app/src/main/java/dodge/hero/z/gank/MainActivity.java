@@ -9,12 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 
+import dodge.hero.z.gank.data.GankService;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity {
@@ -24,10 +28,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Utils.init(getApplication());
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_camara).setOnClickListener(view -> {
+        findViewById(R.id.btn_camera).setOnClickListener(view -> {
             MainActivityPermissionsDispatcher.openCameraWithCheck(this);
         });
 
+        findViewById(R.id.btn_girl_img).setOnClickListener(v -> {
+            getGankService().getUserList(1)
+                    .subscribe(response -> {
+                        System.out.println("请求成功");
+                    }, Throwable::printStackTrace);
+        });
+
+
+    }
+
+    private GankService mGankService;
+
+    private GankService getGankService() {
+        if (mGankService == null) {
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("http://gank.io/api/")
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+                    .addConverterFactory(GsonConverterFactory.create());
+            mGankService = builder.build().create(GankService.class);
+
+        }
+        return mGankService;
     }
 
 
