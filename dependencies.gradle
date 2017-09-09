@@ -1,0 +1,13 @@
+ext {
+    //Android
+    android_support = "25.3.1"
+
+    anko_version = '0.10.1'
+    rxkotlin_version = '2.1.0'
+    drawable_dsl_versin = '0.1.0'
+
+    //dagger
+    daggerVersion = '2.11'
+
+
+}
