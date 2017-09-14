@@ -4,12 +4,16 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.Random;
 
 import dodge.hero.z.gank.data.GankService;
+import dodge.hero.z.gank.view.abstrac.BaseAbsActivity;
+import io.reactivex.subjects.PublishSubject;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -21,10 +25,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseAbsActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.init(getApplication());
         setContentView(R.layout.activity_main);
@@ -39,7 +43,30 @@ public class MainActivity extends AppCompatActivity {
                     }, Throwable::printStackTrace);
         });
 
+        RxView.clicks(findView(R.id.btn_start))
+                .subscribe(o -> interval(),
+                        Throwable::printStackTrace,
+                        () -> System.out.println("完成"));
 
+        findView(R.id.btn_stop).setOnClickListener(view -> {
+            if (mPublishSubject != null) {
+                mPublishSubject.onNext(new Random().nextInt(100));
+            }
+        });
+
+
+    }
+
+    private PublishSubject<Integer> mPublishSubject;
+
+
+    private void interval() {
+        mPublishSubject = PublishSubject.create();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private GankService mGankService;
