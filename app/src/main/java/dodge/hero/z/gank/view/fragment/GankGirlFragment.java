@@ -1,8 +1,13 @@
 package dodge.hero.z.gank.view.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.View;
+
+import com.blankj.utilcode.util.ActivityUtils;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.List;
 
@@ -10,6 +15,7 @@ import dodge.hero.z.gank.R;
 import dodge.hero.z.gank.data.GankService;
 import dodge.hero.z.gank.data.model.GirlImage;
 import dodge.hero.z.gank.view.abstrac.BaseAbsFragment;
+import dodge.hero.z.gank.view.activity.GirlPictureActivity;
 import dodge.hero.z.gank.view.adapter.GankGirlAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Retrofit;
@@ -55,6 +61,19 @@ public class GankGirlFragment extends BaseAbsFragment {
 
     public void showGirlListData(List<GirlImage> data) {
         mAdapter = new GankGirlAdapter(getContext(), R.layout.gank_item_girl_image, data);
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString(GirlPictureActivity.EXTRA_IMG_URL, data.get(position).getUrl());
+                ActivityUtils.startActivity(bundle, getActivity(), GirlPictureActivity.class);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
