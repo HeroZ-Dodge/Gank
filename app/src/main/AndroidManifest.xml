@@ -17,9 +17,8 @@
         android:theme="@style/AppTheme">
 
         <meta-data
-            android:name="dodge.hero.z.gank.component.image.MyAppGlideModule"
-            android:value="GlideModule"/>
-
+            android:name="GlideModule"
+            android:value="dodge.hero.z.gank.component.image.MyAppGlideModule"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -28,6 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.activity.HomeActivity">
+
+
+
+        </activity>
+
     </application>
 
 </manifest>

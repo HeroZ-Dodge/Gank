@@ -38,13 +38,9 @@ public abstract class BaseAbsFragment extends Fragment implements IExpansionView
         return mRootView;
     }
 
-    public int layout() {
-        return 0;
-    }
+    public abstract int layout();
 
-    public void initView() {
-
-    }
+    public abstract void initView();
 
 
     @SuppressWarnings("unchecked")

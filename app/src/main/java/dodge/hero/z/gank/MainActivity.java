@@ -1,6 +1,7 @@
 package dodge.hero.z.gank;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import java.util.Random;
 
 import dodge.hero.z.gank.data.GankService;
 import dodge.hero.z.gank.view.abstrac.BaseAbsActivity;
+import dodge.hero.z.gank.view.activity.HomeActivity;
 import io.reactivex.subjects.PublishSubject;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -44,9 +46,14 @@ public class MainActivity extends BaseAbsActivity {
         });
 
         RxView.clicks(findView(R.id.btn_start))
-                .subscribe(o -> interval(),
+                .subscribe(o -> {
+                            Intent intent = new Intent(this, HomeActivity.class);
+                            startActivity(intent);
+                        },
                         Throwable::printStackTrace,
-                        () -> System.out.println("完成"));
+                        () -> {
+
+                        });
 
         findView(R.id.btn_stop).setOnClickListener(view -> {
             if (mPublishSubject != null) {
