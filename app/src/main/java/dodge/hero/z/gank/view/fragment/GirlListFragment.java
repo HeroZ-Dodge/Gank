@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.List;
@@ -27,8 +30,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * <br>Email:linzheng@aipai.com</br>
  */
 
-public class GankGirlFragment extends BaseAbsFragment {
+public class GirlListFragment extends BaseAbsFragment {
 
+    private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private GankGirlAdapter mAdapter;
     private GankService mGankService;
@@ -41,8 +45,25 @@ public class GankGirlFragment extends BaseAbsFragment {
 
     @Override
     public void initView() {
+        mRefreshLayout = findView(R.id.refresh_layout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        mRefreshLayout.setOnLoadmoreListener(refreshlayout -> {
+            mRefreshLayout.finishLoadmore(3000);
+        });
+        mRefreshLayout.setOnRefreshListener(refreshlayout -> {
+            mRefreshLayout.finishRefresh(3000);
+        });
+
+
         mRecyclerView = findView(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+
+        loadData();
+    }
+
+    private void loadData() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://gank.io/api/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
@@ -76,7 +97,6 @@ public class GankGirlFragment extends BaseAbsFragment {
         });
         mRecyclerView.setAdapter(mAdapter);
     }
-
 
 
 }
