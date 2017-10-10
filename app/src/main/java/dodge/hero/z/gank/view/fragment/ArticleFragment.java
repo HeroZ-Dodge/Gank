@@ -1,11 +1,16 @@
 package dodge.hero.z.gank.view.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +23,7 @@ import dodge.hero.z.gank.di.DI;
 import dodge.hero.z.gank.presenter.impl.ArticlePresenter;
 import dodge.hero.z.gank.view.IArticleListView;
 import dodge.hero.z.gank.view.abstrac.BaseAbsFragment;
+import dodge.hero.z.gank.view.activity.WebActivity;
 import dodge.hero.z.gank.view.adapter.ArticleAdapter;
 
 /**
@@ -52,6 +58,22 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
         mRecyclerView = findView(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ArticleAdapter(getContext(), new ArrayList<>());
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                String url = mAdapter.getData().get(position).getUrl();
+                Bundle bundle = new Bundle();
+                bundle.putString(WebActivity.EXTRA_URL, url);
+                ActivityUtils.startActivity(bundle, getActivity(), WebActivity.class);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+
+
         mRecyclerView.setAdapter(mAdapter);
         DI.component(getActivity()).inject(this);
         mPresenter.init(mPresenterManager, this);
@@ -59,7 +81,7 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
     }
 
     private void loadData(boolean next) {
-        mPresenter.loadData();
+        mPresenter.loadData(next);
     }
 
     @Override
@@ -72,10 +94,15 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
     }
 
     @Override
-    public void showArticle(List<GankInfo> data) {
+    public void refreshArticleData(List<GankInfo> data) {
         mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void addArticleData(List<GankInfo> data) {
+        mAdapter.addData(data);
+    }
+
 
 
 }

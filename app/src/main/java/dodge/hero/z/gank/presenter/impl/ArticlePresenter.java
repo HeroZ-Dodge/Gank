@@ -23,13 +23,17 @@ public class ArticlePresenter extends AbsPresenter<IArticleListView> {
     @Inject
     IPreferencesRepository mPreferencesRepository;
 
+    private int mPage = 1;
+
+
     @Inject
     public ArticlePresenter() {
     }
 
 
-    public void loadData() {
-        mGankService.loadData(DataType.ANDROID, PAGE_SIZE, 1)
+    public void loadData(boolean next) {
+        int page = next ? mPage + 1 : 1;
+        mGankService.loadData(DataType.ANDROID, PAGE_SIZE, page)
                 .map(response -> {
                     if (response.isError()) {
                         throw new IllegalArgumentException("加载数据超时");
@@ -40,7 +44,12 @@ public class ArticlePresenter extends AbsPresenter<IArticleListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
                     mView.finishLoadData();
-                    mView.showArticle(data);
+                    mPage = page;
+                    if (page == 1) {
+                        mView.refreshArticleData(data);
+                    } else {
+                        mView.addArticleData(data);
+                    }
                 }, throwable -> {
                     throwable.printStackTrace();
                     mView.finishLoadData();

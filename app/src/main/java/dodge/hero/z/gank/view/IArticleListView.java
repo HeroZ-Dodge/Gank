@@ -14,7 +14,8 @@ public interface IArticleListView extends IExpansionView {
 
     void finishLoadData();
 
-    void showArticle(List<GankInfo> data);
+    void refreshArticleData(List<GankInfo> data);
 
 
+    void addArticleData(List<GankInfo> data);
 }

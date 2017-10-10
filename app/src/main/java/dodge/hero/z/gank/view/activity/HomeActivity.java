@@ -68,6 +68,11 @@ public class HomeActivity extends BaseAbsActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return "妹纸";
+            } else if (position == 1) {
+                return "Android";
+            }
             return "标题";
         }
     }

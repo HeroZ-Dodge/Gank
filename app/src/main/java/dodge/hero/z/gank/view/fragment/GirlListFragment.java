@@ -11,6 +11,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,6 +53,23 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
         mRefreshLayout.setOnRefreshListener(layout -> loadData(false));
         mRecyclerView = findView(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mAdapter = new GankGirlAdapter(getContext(), new ArrayList<>());
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                Bundle bundle = new Bundle();
+                String url = mAdapter.getData().get(position).getUrl();
+                bundle.putString(GirlPictureActivity.EXTRA_IMG_URL, url);
+                ActivityUtils.startActivity(bundle, getActivity(), GirlPictureActivity.class);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+
         DI.component(getActivity()).inject(this);
         mPresenter.init(mPresenterManager, this);
         mPresenter.loadCache();
@@ -77,33 +95,15 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
 
     @Override
     public void refreshData(List<GankInfo> data) {
-        if (mAdapter == null) {
-            mAdapter = new GankGirlAdapter(getContext(), R.layout.gank_item_girl_image, data);
-            mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(GirlPictureActivity.EXTRA_IMG_URL, data.get(position).getUrl());
-                    ActivityUtils.startActivity(bundle, getActivity(), GirlPictureActivity.class);
-                }
-
-                @Override
-                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    return false;
-                }
-            });
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.getDatas().clear();
-            mAdapter.getDatas().addAll(data);
+        if (mAdapter != null) {
+            mAdapter.setData(data);
         }
     }
 
     @Override
     public void addData(List<GankInfo> data) {
         if (mAdapter != null) {
-            mAdapter.getDatas().addAll(data);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.addData(data);
         }
     }
 

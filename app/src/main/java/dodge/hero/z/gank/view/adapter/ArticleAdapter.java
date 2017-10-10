@@ -2,13 +2,13 @@ package dodge.hero.z.gank.view.adapter;
 
 import android.content.Context;
 
-import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
 
 import dodge.hero.z.gank.R;
 import dodge.hero.z.gank.data.model.GankInfo;
+import dodge.hero.z.gank.view.adapter.base.CommonAdapter;
 
 /**
  * Created by Linzheng on 2017/10/10.
@@ -24,12 +24,8 @@ public class ArticleAdapter extends CommonAdapter<GankInfo> {
 
     @Override
     protected void convert(ViewHolder holder, GankInfo gankInfo, int position) {
-
-    }
-
-    public void setData(List<GankInfo> data) {
-        mDatas = data;
-        notifyDataSetChanged();
+        holder.setText(R.id.tv_desc, gankInfo.getDesc());
+        holder.setText(R.id.tv_date, gankInfo.getPublishedAt());
     }
 
 }
