@@ -10,9 +10,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.jakewharton.rxbinding2.view.RxView;
 
-import java.util.Random;
-
 import dodge.hero.z.gank.data.GankService;
+import dodge.hero.z.gank.di.DI;
 import dodge.hero.z.gank.view.abstrac.BaseAbsActivity;
 import dodge.hero.z.gank.view.activity.HomeActivity;
 import io.reactivex.subjects.PublishSubject;
@@ -39,7 +38,7 @@ public class MainActivity extends BaseAbsActivity {
         });
 
         findViewById(R.id.btn_girl_img).setOnClickListener(v -> {
-            getGankService().getUserList(1)
+            getGankService().getGirlList(1)
                     .subscribe(response -> {
                         System.out.println("请求成功");
                     }, Throwable::printStackTrace);
@@ -56,9 +55,8 @@ public class MainActivity extends BaseAbsActivity {
                         });
 
         findView(R.id.btn_stop).setOnClickListener(view -> {
-            if (mPublishSubject != null) {
-                mPublishSubject.onNext(new Random().nextInt(100));
-            }
+            String key = DI.preferencesRepository().getString("key");
+            System.out.println(key);
         });
 
 

@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import dodge.hero.z.gank.presenter.IPresenterManager;
-import dodge.hero.z.gank.presenter.IPresenterManagerImpl;
+import dodge.hero.z.gank.presenter.base.IPresenterManager;
+import dodge.hero.z.gank.presenter.base.IPresenterManagerImpl;
 
 
 /**

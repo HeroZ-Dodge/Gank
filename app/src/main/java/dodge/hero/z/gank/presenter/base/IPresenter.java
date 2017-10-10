@@ -1,4 +1,4 @@
-package dodge.hero.z.gank.presenter;
+package dodge.hero.z.gank.presenter.base;
 
 
 import dodge.hero.z.gank.view.abstrac.IView;

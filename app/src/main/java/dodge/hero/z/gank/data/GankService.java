@@ -1,5 +1,6 @@
 package dodge.hero.z.gank.data;
 
+import dodge.hero.z.gank.data.model.GankInfo;
 import dodge.hero.z.gank.data.model.GankResponse;
 import dodge.hero.z.gank.data.model.GirlImage;
 import io.reactivex.Observable;
@@ -15,7 +16,12 @@ public interface GankService {
 
 
     @GET("data/福利/10/{page}")
-    Observable<GankResponse<GirlImage>> getUserList(@Path("page") int page);
+    Observable<GankResponse<GirlImage>> getGirlList(@Path("page") int page);
+
+    @GET("data/{type}/{page_size}/{page}")
+    Observable<GankResponse<GankInfo>> loadData(@Path("type") String type,
+                                                @Path("page_size") int pageSize,
+                                                @Path("page") int page);
 
 
 }

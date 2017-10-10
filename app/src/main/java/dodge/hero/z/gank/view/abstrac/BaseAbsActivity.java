@@ -12,8 +12,8 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import dodge.hero.z.gank.presenter.IPresenterManager;
-import dodge.hero.z.gank.presenter.IPresenterManagerImpl;
+import dodge.hero.z.gank.presenter.base.IPresenterManager;
+import dodge.hero.z.gank.presenter.base.IPresenterManagerImpl;
 
 
 /**

@@ -1,4 +1,4 @@
-package dodge.hero.z.gank.presenter;
+package dodge.hero.z.gank.presenter.base;
 
 /**
  * Created by hyj on 2017/5/6.

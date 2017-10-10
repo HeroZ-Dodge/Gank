@@ -8,8 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dodge.hero.z.gank.R;
 import dodge.hero.z.gank.view.abstrac.BaseAbsActivity;
+import dodge.hero.z.gank.view.fragment.ArticleFragment;
 import dodge.hero.z.gank.view.fragment.GirlListFragment;
 
 /**
@@ -43,26 +47,28 @@ public class HomeActivity extends BaseAbsActivity {
 
     private class FragmentAdapter extends FragmentPagerAdapter {
 
-//        private String[] mT
-
+        private List<Fragment> mFragments;
 
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
+            mFragments = new ArrayList<>();
+            mFragments.add(new GirlListFragment());
+            mFragments.add(new ArticleFragment());
         }
 
         @Override
         public Fragment getItem(int position) {
-            return new GirlListFragment();
+            return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return mFragments.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return super.getPageTitle(position);
+            return "标题";
         }
     }
 

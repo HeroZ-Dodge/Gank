@@ -1,22 +1,28 @@
 package dodge.hero.z.gank.data.model;
 
+import java.util.List;
+
 /**
- * Created by Linzheng on 2017/9/9.
+ * Created by Linzheng on 2017/10/10.
  * <br>Email:linzheng@aipai.com</br>
  */
 
-public class GirlImage {
+public class GankInfo {
+
+
     /**
-     * _id : 59b0d757421aa901bcb7dc0c
-     * createdAt : 2017-09-07T13:21:27.937Z
-     * desc : 9-7
-     * publishedAt : 2017-09-07T13:25:26.977Z
+     * _id : 59dc4dd0421aa94e07d1848e
+     * createdAt : 2017-10-10T12:34:24.701Z
+     * desc : Android 展开型布局菜单。
+     * images : ["http://img.gank.io/b39a4adf-b48a-4f2e-990f-b672027bf643","http://img.gank.io/a7b25e90-63ba-4703-bd6c-dc4483fa5172"]
+     * publishedAt : 2017-10-10T12:41:34.882Z
      * source : chrome
-     * type : 福利
-     * url : http://ww1.sinaimg.cn/large/610dc034ly1fjaxhky81vj20u00u0ta1.jpg
+     * type : Android
+     * url : https://github.com/iammert/ScalingLayout
      * used : true
-     * who : daimajia
+     * who : 代码家
      */
+
     private String _id;
     private String createdAt;
     private String desc;
@@ -26,6 +32,7 @@ public class GirlImage {
     private String url;
     private boolean used;
     private String who;
+    private List<String> images;
 
     public String get_id() {
         return _id;
@@ -99,18 +106,11 @@ public class GirlImage {
         this.who = who;
     }
 
-    @Override
-    public String toString() {
-        return "GirlImage{" +
-                "_id='" + _id + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", desc='" + desc + '\'' +
-                ", publishedAt='" + publishedAt + '\'' +
-                ", source='" + source + '\'' +
-                ", type='" + type + '\'' +
-                ", url='" + url + '\'' +
-                ", used=" + used +
-                ", who='" + who + '\'' +
-                '}';
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
