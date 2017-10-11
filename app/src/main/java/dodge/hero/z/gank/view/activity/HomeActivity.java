@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+
+import com.blankj.utilcode.util.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ import dodge.hero.z.gank.view.fragment.GirlListFragment;
 
 public class HomeActivity extends BaseAbsActivity {
 
+    private Toolbar mToolbar;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FragmentPagerAdapter mPagerAdapter;
@@ -36,6 +40,10 @@ public class HomeActivity extends BaseAbsActivity {
     }
 
     private void initView() {
+        mToolbar = findView(R.id.tool_bar);
+        mToolbar.setOnClickListener(view -> {
+            ActivityUtils.startActivity(this, MyCollectionActivity.class);
+        });
         mViewPager = findView(R.id.view_pager);
         mTabLayout = findView(R.id.tab_layout);
         mViewPager.setOffscreenPageLimit(1);

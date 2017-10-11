@@ -1,4 +1,4 @@
-package dodge.hero.z.gank.data.sp;
+package dodge.hero.z.gank.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

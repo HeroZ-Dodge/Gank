@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dodge.hero.z.gank.data.DataType;
-import dodge.hero.z.gank.data.GankService;
+import dodge.hero.z.gank.data.http.DataType;
+import dodge.hero.z.gank.data.http.GankService;
 import dodge.hero.z.gank.data.model.GankInfo;
-import dodge.hero.z.gank.data.sp.IPreferencesRepository;
+import dodge.hero.z.gank.data.preferences.IPreferencesRepository;
 import dodge.hero.z.gank.presenter.base.AbsPresenter;
 import dodge.hero.z.gank.util.JsonType;
 import dodge.hero.z.gank.view.IGirlListView;

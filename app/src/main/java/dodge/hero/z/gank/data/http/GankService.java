@@ -1,4 +1,4 @@
-package dodge.hero.z.gank.data;
+package dodge.hero.z.gank.data.http;
 
 import dodge.hero.z.gank.data.model.GankInfo;
 import dodge.hero.z.gank.data.model.GankResponse;

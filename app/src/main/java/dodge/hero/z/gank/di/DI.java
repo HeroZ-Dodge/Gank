@@ -3,7 +3,8 @@ package dodge.hero.z.gank.di;
 import android.app.Activity;
 import android.app.Application;
 
-import dodge.hero.z.gank.data.sp.IPreferencesRepository;
+import dodge.hero.z.gank.data.database.DatabaseRepository;
+import dodge.hero.z.gank.data.preferences.IPreferencesRepository;
 import dodge.hero.z.gank.di.component.ActivityComponent;
 import dodge.hero.z.gank.di.component.AppComponent;
 import dodge.hero.z.gank.di.component.DaggerActivityComponent;
@@ -29,7 +30,6 @@ public class DI {
         }
     }
 
-
     public static ActivityComponent component(Activity activity) {
         return DaggerActivityComponent.builder()
                 .appComponent(appComponent)
@@ -40,6 +40,10 @@ public class DI {
 
     public static IPreferencesRepository preferencesRepository() {
         return appComponent.preferencesRepository();
+    }
+
+    public static DatabaseRepository dbRepository() {
+        return appComponent.dbRepository();
     }
 
 

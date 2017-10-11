@@ -3,6 +3,7 @@ package dodge.hero.z.gank;
 import android.app.Application;
 
 import com.blankj.utilcode.util.Utils;
+import com.facebook.stetho.Stetho;
 
 import dodge.hero.z.gank.di.DI;
 
@@ -18,5 +19,6 @@ public class GankApplication extends Application {
         super.onCreate();
         DI.init(this);
         Utils.init(this);
+        Stetho.initializeWithDefaults(this);
     }
 }

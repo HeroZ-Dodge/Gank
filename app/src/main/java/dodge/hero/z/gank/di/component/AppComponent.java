@@ -4,8 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import dagger.Component;
-import dodge.hero.z.gank.data.GankService;
-import dodge.hero.z.gank.data.sp.IPreferencesRepository;
+import dodge.hero.z.gank.data.http.GankService;
+import dodge.hero.z.gank.data.database.DatabaseRepository;
+import dodge.hero.z.gank.data.preferences.IPreferencesRepository;
 import dodge.hero.z.gank.di.scope.ForApp;
 import dodge.hero.z.gank.di.module.ContextModule;
 import dodge.hero.z.gank.di.module.DataModule;
@@ -28,4 +29,7 @@ public interface AppComponent {
     IPreferencesRepository preferencesRepository();
 
     GankService gankService();
+
+    DatabaseRepository dbRepository();
+
 }

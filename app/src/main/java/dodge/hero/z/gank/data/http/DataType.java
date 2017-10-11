@@ -1,4 +1,4 @@
-package dodge.hero.z.gank.data;
+package dodge.hero.z.gank.data.http;
 
 /**
  * Created by Linzheng on 2017/10/10.
