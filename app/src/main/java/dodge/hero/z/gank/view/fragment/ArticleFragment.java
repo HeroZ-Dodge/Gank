@@ -1,6 +1,5 @@
 package dodge.hero.z.gank.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +33,7 @@ import dodge.hero.z.gank.view.adapter.ArticleAdapter;
 public class ArticleFragment extends BaseAbsFragment implements IArticleListView {
 
 
-@Inject
+    @Inject
     ArticlePresenter mPresenter;
 
     private SmartRefreshLayout mRefreshLayout;
@@ -72,12 +71,17 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
                 return false;
             }
         });
-
-
         mRecyclerView.setAdapter(mAdapter);
-        DI.component(getActivity()).inject(this);
-        mPresenter.init(mPresenterManager, this);
-        loadData(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPresenter == null) {
+            DI.component(getActivity()).inject(this);
+            mPresenter.init(mPresenterManager, this);
+            loadData(false);
+        }
     }
 
     private void loadData(boolean next) {
@@ -102,7 +106,6 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
     public void addArticleData(List<GankInfo> data) {
         mAdapter.addData(data);
     }
-
 
 
 }

@@ -21,11 +21,13 @@ public class Collection {
     private String desc;
     private int bgColor;    // 背景颜色
     private int bgRes;      // 背景资源颜色
-    @Generated(hash = 1907987598)
-    public Collection(Long pkId, String uuid, String name, int bgColor, int bgRes) {
+    @Generated(hash = 1601906901)
+    public Collection(Long pkId, String uuid, String name, String desc, int bgColor,
+            int bgRes) {
         this.pkId = pkId;
         this.uuid = uuid;
         this.name = name;
+        this.desc = desc;
         this.bgColor = bgColor;
         this.bgRes = bgRes;
     }
@@ -61,6 +63,12 @@ public class Collection {
     }
     public void setBgRes(int bgRes) {
         this.bgRes = bgRes;
+    }
+    public String getDesc() {
+        return this.desc;
+    }
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
 }

@@ -69,11 +69,17 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
 
-        DI.component(getActivity()).inject(this);
-        mPresenter.init(mPresenterManager, this);
-        mPresenter.loadCache();
-        loadData(false);
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPresenter == null) {
+            DI.component(getActivity()).inject(this);
+            mPresenter.init(mPresenterManager, this);
+            mPresenter.loadCache();
+            loadData(false);
+        }
     }
 
     private void loadData(boolean next) {
