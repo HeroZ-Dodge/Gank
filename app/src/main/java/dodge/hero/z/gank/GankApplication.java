@@ -2,6 +2,8 @@ package dodge.hero.z.gank;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.Utils;
+
 import dodge.hero.z.gank.di.DI;
 
 /**
@@ -15,5 +17,6 @@ public class GankApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DI.init(this);
+        Utils.init(this);
     }
 }
