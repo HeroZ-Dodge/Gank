@@ -1,6 +1,7 @@
 package dodge.hero.z.gank.data.preferences;
 
 import dodge.hero.z.gank.util.JsonType;
+import io.reactivex.Observable;
 
 /**
  * Created by Linzheng on 2017/9/26.
@@ -40,4 +41,6 @@ public interface IPreferencesRepository {
     <T> T getValue(String key, T defaultValue, Class<T> clazz);
 
     <T> T getValue(String key, T defaultValue, JsonType<T> jsonType);
+
+    <T> Observable<T> getValueRx(String key, T defaultValue, JsonType<T> jsonType);
 }

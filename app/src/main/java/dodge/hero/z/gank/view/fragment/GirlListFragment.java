@@ -1,11 +1,13 @@
 package dodge.hero.z.gank.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -47,12 +49,29 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
     @Override
     public void initView() {
         mRefreshLayout = findView(R.id.refresh_layout);
+        mRefreshLayout.setEnableLoadmore(false);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-        mRefreshLayout.setOnLoadmoreListener(layout -> loadData(true));
         mRefreshLayout.setOnRefreshListener(layout -> loadData(false));
         mRecyclerView = findView(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                if (layoutManager != null) {
+                    int[] lastPosition = layoutManager.findLastVisibleItemPositions(null);
+                    if (mAdapter.getItemCount() - lastPosition[0] < 6) {
+                        mPresenter.loadData(true);
+                    }
+                }
+            }
+        });
         mAdapter = new GankGirlAdapter(getContext(), new ArrayList<>());
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
@@ -81,6 +100,7 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
             loadData(false);
         }
     }
+
 
     private void loadData(boolean next) {
         mPresenter.loadData(next);

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -32,14 +33,23 @@ import dodge.hero.z.gank.view.adapter.ArticleAdapter;
  */
 public class ArticleFragment extends BaseAbsFragment implements IArticleListView {
 
+    public static final String DATA_TYPE = "data_type";
 
     @Inject
     ArticlePresenter mPresenter;
 
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
-
     private ArticleAdapter mAdapter;
+
+
+    public static ArticleFragment build(String dataType) {
+        ArticleFragment fragment = new ArticleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(DATA_TYPE, dataType);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
 
     @Override
@@ -50,12 +60,29 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
     @Override
     public void initView() {
         mRefreshLayout = findView(R.id.refresh_layout);
+        mRefreshLayout.setEnableLoadmore(false);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-        mRefreshLayout.setOnLoadmoreListener(layout -> loadData(true));
         mRefreshLayout.setOnRefreshListener(layout -> loadData(false));
         mRecyclerView = findView(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (layoutManager != null) {
+                    int lastPosition = layoutManager.findLastVisibleItemPosition();
+                    if (mAdapter.getItemCount() - lastPosition < 6) {
+                        mPresenter.loadData(true);
+                    }
+                }
+            }
+        });
         mAdapter = new ArticleAdapter(getContext(), new ArrayList<>());
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
@@ -80,6 +107,9 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
         if (mPresenter == null) {
             DI.component(getActivity()).inject(this);
             mPresenter.init(mPresenterManager, this);
+            String dataType = getArguments().getString(DATA_TYPE);
+            mPresenter.initData(dataType);
+            mPresenter.loadCache();
             loadData(false);
         }
     }

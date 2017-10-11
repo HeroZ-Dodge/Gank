@@ -8,6 +8,7 @@ import com.f2prateek.rx.preferences2.Preference;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import dodge.hero.z.gank.util.JsonType;
+import io.reactivex.Observable;
 
 /**
  * Created by Linzheng on 2017/9/26.
@@ -105,6 +106,14 @@ public class PreferencesRepository implements IPreferencesRepository {
     public <T> T getValue(String key, T defaultValue, JsonType<T> jsonType) {
         Preference.Converter<T> converter = new GsonPreferenceAdapter<>(jsonType);
         return mRxPreferences.getObject(key, defaultValue, converter).get();
+    }
+
+    @Override
+    public <T> Observable<T> getValueRx(String key, T defaultValue, JsonType<T> jsonType) {
+        Preference.Converter<T> converter = new GsonPreferenceAdapter<>(jsonType);
+        return mRxPreferences.getObject(key, defaultValue, converter).asObservable();
+
+
     }
 
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dodge.hero.z.gank.R;
+import dodge.hero.z.gank.data.http.DataType;
 import dodge.hero.z.gank.view.abstrac.BaseAbsActivity;
 import dodge.hero.z.gank.view.fragment.ArticleFragment;
 import dodge.hero.z.gank.view.fragment.GirlListFragment;
@@ -61,7 +62,10 @@ public class HomeActivity extends BaseAbsActivity {
             super(fm);
             mFragments = new ArrayList<>();
             mFragments.add(new GirlListFragment());
-            mFragments.add(new ArticleFragment());
+            mFragments.add(ArticleFragment.build(DataType.ALL));
+            mFragments.add(ArticleFragment.build(DataType.ANDROID));
+            mFragments.add(ArticleFragment.build(DataType.IOS));
+            mFragments.add(ArticleFragment.build(DataType.VIDEO));
         }
 
         @Override
@@ -76,12 +80,20 @@ public class HomeActivity extends BaseAbsActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return "妹纸";
-            } else if (position == 1) {
-                return "Android";
+            switch (position) {
+                case 0:
+                    return "妹纸";
+                case 1:
+                    return "最新";
+                case 2:
+                    return "Android";
+                case 3:
+                    return "IOS";
+                case 4:
+                    return "视频";
+                default:
+                    return "其他";
             }
-            return "标题";
         }
     }
 
