@@ -15,13 +15,16 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            app:layout_scrollFlags="scroll|enterAlways">
+
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             app:tabMode="scrollable"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             app:tabSelectedTextColor="@color/colorAccent"
             app:tabTextColor="@color/white"/>
 
