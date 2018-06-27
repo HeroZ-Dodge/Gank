@@ -1,7 +1,7 @@
 package dodge.hero.z.gank.presenter.base;
 
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import dodge.hero.z.gank.view.abstrac.IView;
@@ -46,7 +46,7 @@ public abstract class AbsPresenter<T extends IView> implements IPresenter<T> {
 
     protected void addCancelable(Disposable disposable){
         if(mDisposableList == null){
-            mDisposableList = new ArrayList<>();
+            mDisposableList = new LinkedList<>();
         }
         mDisposableList.add(disposable);
     }

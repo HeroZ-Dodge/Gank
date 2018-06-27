@@ -25,6 +25,9 @@ import dodge.hero.z.gank.view.IArticleListView;
 import dodge.hero.z.gank.view.abstrac.BaseAbsFragment;
 import dodge.hero.z.gank.view.activity.WebActivity;
 import dodge.hero.z.gank.view.adapter.ArticleAdapter;
+import dodge.hero.z.gank.view.adapter.ArticleDelegate;
+import dodge.hero.z.gank.view.adapter.ArticleWithImgDelegate;
+import dodge.hero.z.gank.view.adapter.base.MultiItemAdapter;
 
 /**
  * 文章列表
@@ -40,7 +43,7 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
 
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
-    private ArticleAdapter mAdapter;
+    private MultiItemAdapter<GankInfo> mAdapter;
 
 
     public static ArticleFragment build(String dataType) {
@@ -83,7 +86,9 @@ public class ArticleFragment extends BaseAbsFragment implements IArticleListView
                 }
             }
         });
-        mAdapter = new ArticleAdapter(getContext(), new ArrayList<>());
+        mAdapter = new MultiItemAdapter<>(getContext(), new ArrayList<>());
+        mAdapter.addItemViewDelegate(new ArticleDelegate(getContext()));
+        mAdapter.addItemViewDelegate(new ArticleWithImgDelegate(getContext()));
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {

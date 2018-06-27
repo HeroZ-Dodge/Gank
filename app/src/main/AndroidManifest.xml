@@ -34,6 +34,7 @@
         <activity android:name=".view.activity.WebActivity"/>
 
         <activity android:name=".view.activity.MyCollectionActivity"/>
+        <activity android:name=".view.activity.GirlPreviewActivity" />
 
     </application>
 

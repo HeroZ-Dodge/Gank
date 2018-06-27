@@ -16,6 +16,7 @@ import dodge.hero.z.gank.presenter.base.AbsPresenter;
 import dodge.hero.z.gank.util.JsonType;
 import dodge.hero.z.gank.view.IArticleListView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -49,12 +50,13 @@ public class ArticlePresenter extends AbsPresenter<IArticleListView> {
      * 加载缓存
      */
     public void loadCache() {
-        mPreferencesRepository.getValueRx(CACHE_KEY + mDataType,
+        Disposable disposable = mPreferencesRepository.getValueRx(CACHE_KEY + mDataType,
                 new ArrayList<>(), new JsonType<ArrayList<GankInfo>>() {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> mView.refreshArticleData(data));
+        addCancelable(disposable);
     }
 
     private boolean mIsLoading = false;
@@ -66,7 +68,7 @@ public class ArticlePresenter extends AbsPresenter<IArticleListView> {
         LogUtils.d("加载更多");
         mIsLoading = true;
         int page = next ? mPage + 1 : 1;
-        mGankService.loadData(mDataType, PAGE_SIZE, page)
+        Disposable disposable = mGankService.loadData(mDataType, PAGE_SIZE, page)
                 .map(GankResponse::getResults)
                 .doOnNext(data -> {
                     if (!next)
@@ -89,6 +91,7 @@ public class ArticlePresenter extends AbsPresenter<IArticleListView> {
                     mView.toast("加载数据超时");
                     mIsLoading = false;
                 });
+        addCancelable(disposable);
     }
 
 

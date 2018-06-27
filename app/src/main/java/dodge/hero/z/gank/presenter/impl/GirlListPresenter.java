@@ -1,7 +1,5 @@
 package dodge.hero.z.gank.presenter.impl;
 
-import android.util.Log;
-
 import com.blankj.utilcode.util.LogUtils;
 
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ import dodge.hero.z.gank.presenter.base.AbsPresenter;
 import dodge.hero.z.gank.util.JsonType;
 import dodge.hero.z.gank.view.IGirlListView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -45,12 +44,13 @@ public class GirlListPresenter extends AbsPresenter<IGirlListView> {
      * 加载缓存
      */
     public void loadCache() {
-        mPreferencesRepository.getValueRx(KEY_CACHE,
+        Disposable disposable = mPreferencesRepository.getValueRx(KEY_CACHE,
                 new ArrayList<>(), new JsonType<ArrayList<GankInfo>>() {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> mView.refreshData(data));
+        addCancelable(disposable);
     }
 
     private boolean mIsLoading = false;
@@ -67,7 +67,7 @@ public class GirlListPresenter extends AbsPresenter<IGirlListView> {
         LogUtils.d("加载更多");
         mIsLoading = true;
         int page = next ? mPage + 1 : 1;
-        mGankService.loadData(DataType.GIRL, PAGE_SIZE, page)
+        Disposable disposable = mGankService.loadData(DataType.GIRL, PAGE_SIZE, page)
                 .map(GankResponse::getResults)
                 .doOnNext(data -> {
                     if (!next)
@@ -89,6 +89,7 @@ public class GirlListPresenter extends AbsPresenter<IGirlListView> {
                     mView.toast("加载数据超时");
                     mIsLoading = false;
                 });
+        addCancelable(disposable);
     }
 
 }

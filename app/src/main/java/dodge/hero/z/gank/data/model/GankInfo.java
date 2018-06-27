@@ -1,5 +1,8 @@
 package dodge.hero.z.gank.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,7 +19,7 @@ import dodge.hero.z.gank.data.database.StringListPropertyConverter;
  * <br>Email:linzheng@aipai.com</br>
  */
 @Entity
-public class GankInfo {
+public class GankInfo implements Parcelable {
 
 
     /**
@@ -168,4 +171,52 @@ public class GankInfo {
     public boolean getUsed() {
         return this.used;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.pkId);
+        dest.writeString(this.collectionId);
+        dest.writeString(this._id);
+        dest.writeString(this.createdAt);
+        dest.writeString(this.desc);
+        dest.writeString(this.publishedAt);
+        dest.writeString(this.source);
+        dest.writeString(this.type);
+        dest.writeString(this.url);
+        dest.writeByte(this.used ? (byte) 1 : (byte) 0);
+        dest.writeString(this.who);
+        dest.writeStringList(this.images);
+    }
+
+    protected GankInfo(Parcel in) {
+        this.pkId = (Long) in.readValue(Long.class.getClassLoader());
+        this.collectionId = in.readString();
+        this._id = in.readString();
+        this.createdAt = in.readString();
+        this.desc = in.readString();
+        this.publishedAt = in.readString();
+        this.source = in.readString();
+        this.type = in.readString();
+        this.url = in.readString();
+        this.used = in.readByte() != 0;
+        this.who = in.readString();
+        this.images = in.createStringArrayList();
+    }
+
+    public static final Parcelable.Creator<GankInfo> CREATOR = new Parcelable.Creator<GankInfo>() {
+        @Override
+        public GankInfo createFromParcel(Parcel source) {
+            return new GankInfo(source);
+        }
+
+        @Override
+        public GankInfo[] newArray(int size) {
+            return new GankInfo[size];
+        }
+    };
 }

@@ -25,6 +25,7 @@ import dodge.hero.z.gank.presenter.impl.GirlListPresenter;
 import dodge.hero.z.gank.view.IGirlListView;
 import dodge.hero.z.gank.view.abstrac.BaseAbsFragment;
 import dodge.hero.z.gank.view.activity.GirlPictureActivity;
+import dodge.hero.z.gank.view.activity.GirlPreviewActivity;
 import dodge.hero.z.gank.view.adapter.GankGirlAdapter;
 
 /**
@@ -76,10 +77,7 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Bundle bundle = new Bundle();
-                String url = mAdapter.getData().get(position).getUrl();
-                bundle.putString(GirlPictureActivity.EXTRA_IMG_URL, url);
-                ActivityUtils.startActivity(bundle, getActivity(), GirlPictureActivity.class);
+                GirlPreviewActivity.start(getActivity(), (ArrayList<GankInfo>) mAdapter.getData(), position);
             }
 
             @Override
