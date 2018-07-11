@@ -1,5 +1,7 @@
 package dodge.hero.z.gank.view.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
@@ -19,6 +21,12 @@ public class GirlPictureActivity extends BaseAbsActivity {
 
     private String mImageUrl;
     private ImageView mIvGirl;
+
+    public static void start(Activity activity, String url) {
+        Intent intent = new Intent(activity, GirlPictureActivity.class);
+        intent.putExtra(EXTRA_IMG_URL, url);
+        activity.startActivity(intent);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

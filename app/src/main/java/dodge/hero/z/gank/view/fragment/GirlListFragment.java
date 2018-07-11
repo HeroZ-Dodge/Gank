@@ -77,7 +77,8 @@ public class GirlListFragment extends BaseAbsFragment implements IGirlListView {
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                GirlPreviewActivity.start(getActivity(), (ArrayList<GankInfo>) mAdapter.getData(), position);
+                GirlPictureActivity.start(getActivity(), mAdapter.getData().get(position).getUrl());
+//                GirlPreviewActivity.start(getActivity(), (ArrayList<GankInfo>) mAdapter.getData(), position);
             }
 
             @Override

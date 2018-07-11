@@ -29,7 +29,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.GirlPictureActivity"/>
+        <activity android:name=".view.activity.GirlPictureActivity"
+            android:theme="@style/PictureTheme"/>
 
         <activity android:name=".view.activity.WebActivity"/>
 
